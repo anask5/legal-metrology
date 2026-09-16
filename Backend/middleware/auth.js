@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 function auth(req, res, next) {
     try {
-        const data = jwt.verify(req.cookies.token, process.env.JWT_SECRET);
+        const data = jwt.verify(req.cookies.token, "topsecret");
 
         req.user = data;
         next();

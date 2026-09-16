@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Metrology Test</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f2f2f2;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Legal Metrology Test</h1>
+
+    <input type="file" id="image" accept="image/*">
+
+    <br>
+
+    <button onclick="scanProduct()">Scan Product</button>
+
+    <div id="result">Result will appear here...</div>
+
+
+    <script>
+
+        async function scanProduct() {
+
+            const imageInput = document.getElementById("image");
+            const result = document.getElementById("result");
+
+            if (!imageInput.files[0]) {
+                result.innerText = "Please select an image first.";
+                return;
+            }
+
+            const formData = new FormData();
+
+            formData.append("image", imageInput.files[0]);
+
+            result.innerText = "Scanning...";
+
+            try {
+
+                const response = await fetch(
+                    "http://localhost:3000/api/scan",
+                    {
+                        method: "POST",
+                        body: formData,
+                        credentials: "include"
+                    }
+                );
+
+                const data = await response.json();
+
+                result.innerText = JSON.stringify(data, null, 2);
+
+            } catch (error) {
+
+                console.error(error);
+
+                result.innerText =
+                    "Error connecting to backend:\n" +
+                    error.message;
+            }
+        }
+
+    </script>
+
+</body>
+</html>

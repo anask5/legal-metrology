@@ -1,5 +1,7 @@
 const analyzeProduct = async (imagePath) => {
 
+    console.log("Mock AI received:", imagePath);
+
     return {
         product_name: {
             value: "ABC Shampoo",
