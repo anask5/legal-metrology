@@ -7,7 +7,7 @@ function Sidebar() {
   const menuItems = [
     {name:"Home",path:"/home",icon:"⌂"},
     
-    { name: "New Scan", path: "/scan", icon: "⌕" },
+    { name: "New Scan", path: "/scan_prod", icon: "⌕" },
     { name: "Scan History", path: "/history", icon: "◷" },
     
   ];

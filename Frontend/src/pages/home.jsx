@@ -1,10 +1,12 @@
 import React from "react";
 import imp from "../assets/images/emblem.png";
-import Navbar from "./navbar.jsx";
-import Footer from "./footer.jsx";
-import { Link } from "react-router-dom";
+import Navbar from "./Navbar.jsx";
+import Footer from "./Footer.jsx";
+import { Link , useNavigate } from "react-router-dom";
 
 function Home() {
+  const navigate = useNavigate();
+
   return (
     <>
       <style>{`
@@ -666,10 +668,9 @@ function Home() {
                 <Link to="/login" className="hero-btn-primary">
                   Get Started
                 </Link>
-
-                <a href="#features" className="hero-btn-secondary">
+                <Link to="/scan_prod" className="hero-btn-primary">
                   Learn More
-                </a>
+                </Link>
               </div>
 
             </div>
@@ -769,7 +770,7 @@ function Home() {
 
           {/* Footer */}
 
-  
+
         </section>
 
       </div>
