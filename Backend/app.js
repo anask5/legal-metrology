@@ -2,6 +2,7 @@ import express, { urlencoded } from "express";
 import mongoose from "mongoose";
 import db from '../Backend/config/db.js';
 import userModel from "../Backend/models/userModel.js";
+import ComplianceModel from "../Backend/models/complianceReport.js";
 import cookieParser from "cookie-parser";
 import jwt from "jsonwebtoken";
 import bcrypt from 'bcrypt';
@@ -9,12 +10,14 @@ import cors from 'cors';
 import auth from './middleware/isAdmin.js'
 import upload from "../Backend/middleware/upload.js";
 import analyzeProduct from "../Backend/services/aiService.js";
+import checkCompliance from "./rules/legalMetrologyRules.js";
+import Compliance from "../Backend/models/complianceReport.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 
-app.use(cookieParser());
+app.use(cookieParser());    
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(
@@ -161,10 +164,25 @@ app.post('/api/scan', upload.single('image'), async (req, res) => {
 
         console.log('AI Result', AiResult);
 
+        const ruleResult = await checkCompliance(AiResult);
+        
+        let complianceResult = await ComplianceModel.create({
+            image: req.file.path,
+            extractedData: AiResult,
+            confidenceScore: ruleResult.confidenceScore,
+            complianceResult: ruleResult.overallStatus,
+            violations: ruleResult.violations,
+            inspector: req.data.user
+        })
+
         return res.status(200).json({
             success: true,
             message: "Product Scanned Successfully",
-            data: AiResult
+            data: {
+                inspectionID: complianceResult.ID,
+                extractedData: AiResult,
+                Compliance: ruleResult
+            }
         });
 
     }
