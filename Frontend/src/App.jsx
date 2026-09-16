@@ -3,6 +3,7 @@ import Layout from "./layout";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from './pages/home'
+import Dashboard from "./pages/dashboard";
 
 function App() {
   const router = createBrowserRouter([
