@@ -7,7 +7,8 @@
     import jwt from "jsonwebtoken";
     import bcrypt from 'bcrypt';
     import cors from 'cors';
-    import auth from '../Backend/middleware/isAdmin.js'
+    import isAdmin from '../Backend/middleware/isAdmin.js'
+    import auth from '../Backend/middleware/auth.js'
     import upload from "../Backend/middleware/upload.js";
     import analyzeProduct from "../Backend/services/aiService.js";
     import checkCompliance from "../Backend/rules/legalMetrologyRules.js";
@@ -60,7 +61,9 @@
                 email: newUser.email,
                 dept: newUser.dept
             })
-            let token =  jwt.sign({email: newUser.email,
+            let token =  jwt.sign({
+                id: createdUser._id, 
+                email: newUser.email,
                 role: createdUser.role
             }, "topsecret",
                     
@@ -223,7 +226,7 @@
 //         }
         
 //     });
-app.post('/api/scan', upload.single('image'), async (req, res) => {
+app.post('/api/scan', auth, upload.single('image'), async (req, res) => {
     try {
         console.log("received");
 
@@ -245,7 +248,7 @@ app.post('/api/scan', upload.single('image'), async (req, res) => {
             confidenceScore: ruleResult.confidenceScore,
             complianceResult: ruleResult.overallStatus,
             violations: ruleResult.violations,
-            inspector: req.user
+            inspector: req.user.id || req.user._id
         });
         console.log("Compliance Report Added");
 
