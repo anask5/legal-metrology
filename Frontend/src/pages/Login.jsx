@@ -609,7 +609,7 @@ const Login = () => {
 };
 function Image() {
   return (
-    <img src={imp} alt="ashok" style={{ width: '30px', height: '100%' }} />
+    <img src={imp} alt="ashok" style={{ width: '70px', height: '100%' }} />
   )
 }
 export default Login;
