@@ -476,53 +476,6 @@ Result
 React Frontend
 ```
 
----
-
-# 🛠️ Development Priority
-
-For the internal hackathon prototype, development should happen in this order:
-
-### Phase 1
-
-* Express server
-* MongoDB connection
-* Authentication
-
-### Phase 2
-
-* Image upload
-* `POST /api/scan`
-
-### Phase 3
-
-* Mock AI
-* Structured product data
-
-### Phase 4
-
-* Compliance rule engine
-
-### Phase 5
-
-* Save inspection results
-
-### Phase 6
-
-* Inspection history
-
-### Phase 7
-
-* Confirm/dismiss violations
-
-### Phase 8
-
-* Frontend integration
-
-### Phase 9
-
-* Replace Mock AI with the real AI service
-
----
 
 # 🚧 Future Improvements
 
