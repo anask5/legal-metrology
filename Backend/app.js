@@ -54,10 +54,11 @@
         const salt = await bcrypt.genSalt(10);
         const secPass = await bcrypt.hash(newUser.password, salt);
         let createdUser = await userModel.create({
-                roll_no: newUser.roll_no,
+                emp_id: newUser.emp_id,
                 name: newUser.name,
                 password: secPass,
-                email: newUser.email
+                email: newUser.email,
+                dept: newUser.dept
             })
             let token =  jwt.sign({email: newUser.email,
                 role: createdUser.role
@@ -146,74 +147,144 @@
         }
     });
 
-    app.post('/api/scan', upload.single('image'), async (req, res) => {
+//     app.post('/api/scan', upload.single('image'), async (req, res) => {
 
-        try {
-            console.log("received")
-            if (!req.file) {
-                return res.status(400).json({
-                    success:false,
-                    message: "Product image is required"
-                });
-            }
+//         try {
+//             console.log("received")
+//             if (!req.file) {
+//                 return res.status(400).json({
+//                     success:false,
+//                     message: "Product image is required"
+//                 });
+//             }
 
 
-            const AiResult = await analyzeProduct(req.file.path);
+//             const AiResult = await analyzeProduct(req.file.path);
 
-            console.log('AI Result', AiResult);
+//             console.log('AI Result', AiResult);
 
-            const ruleResult = await checkCompliance(AiResult);
+//             const ruleResult = await checkCompliance(AiResult);
             
-            let complianceResult = await ComplianceModel.create({
-                image: req.file.path,
-                extractedData: AiResult,
-                confidenceScore: ruleResult.confidenceScore,
-                complianceResult: ruleResult.overallStatus,
-                violations: ruleResult.violations,
-                inspector: req.user
-            })
-            console.log("Compliance Report Added");
-
-            const stats = await Inspection.findOne();
+//             let complianceResult = await ComplianceModel.create({
+//                 image: req.file.path,
+//                 extractedData: AiResult,
+//                 confidenceScore: ruleResult.confidenceScore,
+//                 complianceResult: ruleResult.overallStatus,
+//                 violations: ruleResult.violations,
+//                 inspector: req.user
+//             })
+//             console.log("Compliance Report Added");
+            
+//             const stats = await Inspection.findOne();
+//             if (!stats) {
+//         stats = await Inspection.create({
+//             productScanned: 0,
+//             compliant: 0,
+//             potentialViolation: 0,
+//             pendingReview: 0
+//   });
+// }
     
-        stats.productScanned += 1;
+//             stats.productScanned += 1;
+
+//         if (ruleResult.overallStatus === "COMPLIANT") {
+//             stats.compliant += 1;
+//     }
+
+//         if (ruleResult.overallStatus === "POTENTIAL_VIOLATIONS") {
+//         stats.potentialViolation += 1;
+//     }
+
+//         if (ruleResult.overallStatus === "PENDING") {
+//             stats.pendingReview += 1;   
+//     }
+
+//     await stats.save();
+//             return res.status(200).json({
+//                 success: true,
+//                 message: "Product Scanned Successfully",
+//                 data: {
+//                     inspectionID: complianceResult._id,
+//                     extractedData: AiResult,
+//                     Compliance: ruleResult
+//                 }
+//             });
+
+//         }
+//         catch(err){
+
+//             console.error(err);
+
+//             return res.status(500).json({
+//                 success: false,
+//                 message: 'scan failed'
+//             });
+
+//         }
+        
+//     });
+app.post('/api/scan', upload.single('image'), async (req, res) => {
+    try {
+        console.log("received");
+
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                message: "Product image is required"
+            });
+        }
+
+        const AiResult = await analyzeProduct(req.file.path);
+        console.log('AI Result', AiResult);
+
+        const ruleResult = await checkCompliance(AiResult);
+
+        const complianceResult = await ComplianceModel.create({
+            image: req.file.path,
+            extractedData: AiResult,
+            confidenceScore: ruleResult.confidenceScore,
+            complianceResult: ruleResult.overallStatus,
+            violations: ruleResult.violations,
+            inspector: req.user
+        });
+        console.log("Compliance Report Added");
+
+        // Determine which category to increment
+        const incUpdates = { productScanned: 1 };
 
         if (ruleResult.overallStatus === "COMPLIANT") {
-            stats.compliant += 1;
-    }
-
-        if (ruleResult.overallStatus === "POTENTIAL_VIOLATIONS") {
-        stats.potentialViolation += 1;
-    }
-
-        if (ruleResult.overallStatus === "PENDING") {
-            stats.pendingReview += 1;   
-    }
-
-    await stats.save();
-            return res.status(200).json({
-                success: true,
-                message: "Product Scanned Successfully",
-                data: {
-                    inspectionID: complianceResult._id,
-                    extractedData: AiResult,
-                    Compliance: ruleResult
-                }
-            });
-
+            incUpdates.compliant = 1;
+        } else if (ruleResult.overallStatus === "POTENTIAL_VIOLATIONS") {
+            incUpdates.potentialViolation = 1;
+        } else if (ruleResult.overallStatus === "PENDING") {
+            incUpdates.pendingReview = 1;
         }
-        catch(err){
 
-            console.error(err);
+        // Upsert creates the doc if empty, and atomically increments counters
+        await Inspection.findOneAndUpdate(
+            {},
+            { $inc: incUpdates },
+            { upsert: true, new: true, setDefaultsOnInsert: true }
+        );
 
-            return res.status(500).json({
-                success: false,
-                message: 'scan failed'
-            });
+        return res.status(200).json({
+            success: true,
+            message: "Product Scanned Successfully",
+            data: {
+                inspectionID: complianceResult._id,
+                extractedData: AiResult,
+                Compliance: ruleResult
+            }
+        });
 
-        }
-        
-    });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({
+            success: false,
+            message: 'scan failed'
+        });
+    }
+});
 
     app.get('/api/inspections', async (req, res) => {
 
