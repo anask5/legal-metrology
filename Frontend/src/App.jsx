@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import Home from './pages/home'
 import Dashboard from "./pages/dashboard";
 import Scan from "./pages/scan_prod";
+import History from "./pages/history";
 
 function App() {
   const router = createBrowserRouter([
@@ -32,7 +33,11 @@ function App() {
         {
           path: "/scan_prod",
           element: <Scan />,
-        }
+        },
+        {
+          path: "/history",
+          element: <History />,
+        },
       ],
     },
   ]);
