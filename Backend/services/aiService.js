@@ -2,7 +2,33 @@ const analyzeProduct = async (imagePath) => {
 
     console.log("Mock AI received:", imagePath);
 
-    return {
+
+    const isViolation = Math.random() < 0.5;
+
+    const violationFields = [
+        "product_name",
+        "manufacturer",
+        "country_of_origin",
+        "net_quantity",
+        "mrp",
+        "manufacturing_date",
+        "best_before",
+        "consumer_care"
+    ];
+
+
+    const missingField = isViolation
+        ? violationFields[Math.floor(Math.random() * violationFields.length)]
+        : null;
+
+    console.log(
+        isViolation
+            ? `Mock violation: ${missingField}`
+            : "Mock result: COMPLIANT"
+    );
+
+    const data = {
+
         product_name: {
             value: "ABC Shampoo",
             confidence: 0.96
@@ -39,10 +65,21 @@ const analyzeProduct = async (imagePath) => {
         },
 
         consumer_care: {
-            value: null,
-            confidence: 0.20
+            value: "1800-123-4567",
+            confidence: 0.94
         }
+
     };
+
+
+    if (missingField) {
+
+        data[missingField].value = null;
+        data[missingField].confidence = 0.20;
+
+    }
+
+    return data;
 };
 
 export default analyzeProduct;

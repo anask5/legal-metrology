@@ -22,13 +22,18 @@ const complianceSchema = new mongoose.Schema(
       required: true
     },
 
-    violations: [
-      {
+violations: [
+    {
         field: String,
         message: String,
-        confidence: Number
-      }
-    ],
+        confidence: Number,
+        status: {
+            type: String,
+            enum: ["PENDING", "CONFIRMED", "DECLINED"],
+            default: "PENDING"
+        }
+    }
+],
 
     inspector: {
       type: mongoose.Schema.Types.ObjectId,

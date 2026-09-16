@@ -30,7 +30,7 @@ const Login = () => {
 
       if (response.ok) {
         setMessage(data.message);
-        navigate("/createUrl")
+        navigate("/dashboard")
       }
       else {
         setMessage(data.message)

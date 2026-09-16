@@ -7,9 +7,12 @@ const userSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    roll_no: {
+    emp_id: {
       type: String,
       unique: true
+    },
+    dept: {
+      type: String
     },
 
     email: {
@@ -26,8 +29,8 @@ const userSchema = new mongoose.Schema(
 
     role: {
       type: String,
-      enum: ["admin", "teacher", "student"],
-      default: "student",
+      enum: ["admin", "inspector", "user"],
+      default: "inspector",
     },
   },
   {
