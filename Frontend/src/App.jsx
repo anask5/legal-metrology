@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Layout from "./Layout";
 import InspectorLayout from "./pages/InspectorLayout";
@@ -9,47 +9,51 @@ import Register from "./pages/Register";
 
 import Dashboard from "./pages/dashboard";
 import Scan from "./pages/scan_prod";
-
+import History from "./pages/history";
 
 function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
+  const router = createBrowserRouter([
+    // ================= PUBLIC PAGES =================
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          path: "/",
+          element: <Home />,
+        },
+        {
+          path: "/login",
+          element: <Login />,
+        },
+        {
+          path: "/register",
+          element: <Register />,
+        },
+      ],
+    },
 
-        {/* ================= PUBLIC PAGES ================= */}
+    // ================= INSPECTOR PAGES =================
+    {
+      element: <InspectorLayout />,
+      children: [
+        {
+          path: "/dashboard",
+          element: <Dashboard />,
+        },
+        {
+          path: "/scan_prod",
+          element: <Scan />,
+        },
+        {
+          path: "/history",
+          element: <History />,
+        },
+      ],
+    },
+  ]);
 
-        <Route element={<Layout />}>
-
-          <Route path="/" element={<Home />} />
-
-          <Route path="/login" element={<Login />} />
-
-          <Route path="/register" element={<Register />} />
-
-        </Route>
-
-
-        {/* ================= INSPECTOR PAGES ================= */}
-
-        <Route element={<InspectorLayout />}>
-
-          <Route
-            path="/dashboard"
-            element={<Dashboard />}
-          />
-
-          <Route
-            path="/scan_prod"
-            element={<Scan />}
-          />
-
-          
-
-        </Route>
-
-      </Routes>
-    </BrowserRouter>
-  );
+  return <RouterProvider router={router} />;
 }
 
-  export default App;
+export default App;
