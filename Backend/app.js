@@ -47,7 +47,7 @@
 
 
 
-    app.post('/api/register', async (req, res) => {
+    app.post('/api/register',isAdmin, async (req, res) => {
         try {
         const newUser = req.body
         // PASSWORD HASHING 
@@ -252,7 +252,7 @@ app.post('/api/scan', auth, upload.single('image'), async (req, res) => {
         });
         console.log("Compliance Report Added");
 
-        // Determine which category to increment
+     
         const incUpdates = { productScanned: 1 };
 
         if (ruleResult.overallStatus === "COMPLIANT") {
@@ -263,7 +263,6 @@ app.post('/api/scan', auth, upload.single('image'), async (req, res) => {
             incUpdates.pendingReview = 1;
         }
 
-        // Upsert creates the doc if empty, and atomically increments counters
         await Inspection.findOneAndUpdate(
             {},
             { $inc: incUpdates },
