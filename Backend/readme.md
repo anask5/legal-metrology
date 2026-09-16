@@ -125,10 +125,6 @@ MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
 ```
 
-Never commit `.env` to GitHub.
-
-Use `.env.example` for variables that other team members need.
-
 ---
 
 # ▶️ Running the Server
@@ -175,7 +171,7 @@ Legal Metrology API Running
 POST /api/register
 ```
 
-Creates a new user account.
+Creates a new user account only for Admin.
 
 ---
 
