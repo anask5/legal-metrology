@@ -1,145 +1,197 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
-const Footer = () => {
-    return (
-        <>
-            <style>{`      
-
-        .footer{
-          margin-top:60px;
-          background:#061a2f;
-          backdrop-filter:blur(18px);
-          -webkit-backdrop-filter:blur(18px);
-          border-top:1px solid rgba(255,255,255,0.12);
-          color:white;
-          padding:40px 8%;
-          color:white;
+function Footer() {
+  return (
+    <>
+      <style>{`
+        
+        .feature-strip {
+          max-width: 1480px;
+          margin: 0 auto;
+          padding: 0 58px;
         }
 
-        .footer-container{
-          display:flex;
-          justify-content:space-between;
-          align-items:flex-start;
-          flex-wrap:wrap;
-          gap:40px;
-        }
+        .feature-strip-box {
+          position: relative;
+          min-height: 79px;
+          padding: 12px 22px 18px;
 
-        .footer-brand{
-          flex:1;
-          min-width:250px;
-        }
-
-        .footer-brand h2{
-          color:white;
-          margin-bottom:12px;
-          font-size:28px;
-        }
-
-        .footer-brand p{
-           color:white;
-          line-height:1.7;
-          max-width:350px;
-        }
-
-        .footer-links{
-          flex: 1;
-          display: flex;
-          min-width: 200px;                        
-          flex-direction: column;
+          border-top: 1px solid #dbe4ef;
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
           align-items: center;
+          gap: 10px;
         }
 
-        .footer-links h3,
-        .footer-contact h3{
-          margin-bottom:15px;
-          color:white;
-        }
- 
-        .footer-links a{
-          display:block;
-          color:white;
-          text-decoration:none;
-          margin-bottom:10px;
-          transition:.3s;
+        .feature-item {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          min-height: 50px;
+          padding-right: 15px;
         }
 
-        .footer-links a:hover{
-          color:#60a5fa;
-          padding-left:6px;
+        .feature-item:not(:last-child) {
+          border-right: 1px solid #dbe4ef;
         }
 
-        .footer-contact{
-          flex:1;
-          min-width:250px;
-          text-align: -webkit-center;
+        .feature-icon {
+          width: 31px;
+          height: 31px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #eef5ff;
+          border: 1px solid #d2e3fb;
+          color: #146bdc;
+          font-size: 13px;
+          font-weight: 900;
+          flex: 0 0 auto;
         }
 
-        .footer-contact p{
-          color:white;
-          margin-bottom:10px;
+        .feature-item-title {
+          color: #172f50;
+          font-size: 10px;
+          font-weight: 850;
         }
 
-        .copyright{
-          margin-top:35px;
-          padding-top:20px;
-          text-align:center;
-          border-top:1px solid rgba(255,255,255,.1);
-          color:white;
-          font-size:14px;
+        .feature-item-sub {
+          margin-top: 4px;
+          color: #71839c;
+          font-size: 8.5px;
+          line-height: 1.3;
         }
 
-        @media(max-width:585px){
-          .footer-container{
-            flex-direction:column;
-            text-align:center;
-            align-items: center;
-          }
+        /* India accent */
+        .india-accent {
+          position: absolute;
+          right: 0;
+          bottom: -1px;
+          width: 220px;
+          height: 30px;
+          overflow: hidden;
+        }
 
-          .footer-brand p{
-            max-width:100%;
-          }
+        .wave {
+          position: absolute;
+          width: 260px;
+          height: 35px;
+          right: -20px;
+          border-radius: 50%;
+          transform: rotate(-8deg);
+        }
 
-          .footer-links a:hover{
-            padding-left:0;
-          }
+        .wave.orange {
+          bottom: 1px;
+          border-top: 4px solid #ef7f1a;
+        }
+
+        .wave.white {
+          bottom: 6px;
+          border-top: 4px solid #ffffff;
+          filter: drop-shadow(0 0 0 #cad4df);
+        }
+
+        .wave.green {
+          bottom: 10px;
+          border-top: 4px solid #138a4b;
+        }
+
+        .footer-line {
+          max-width: 1480px;
+          margin: 0 auto;
+          padding: 0 58px;
+        }
+
+        .footer-links {
+          padding: 0 0 7px;
+          text-align: center;
+          color: #61728b;
+          font-size: 8px;
+        }
+
+        .footer-links span {
+          margin: 0 8px;
+          color: #b0bccb;
         }
       `}</style>
-            <footer className="footer">
-                <div className="footer-container">
 
-                    <div className="footer-brand">
-                        <h2>Title</h2>
-                        <p>
-                            Title efficiently shortens long URLs, making links easier to share, manage, and access while improving overall user convenience.
-                        </p>
-                    </div>
+      <footer className="site-footer">
 
-                    <div className="footer-links">
-                        <h3>Quick Links</h3>
+        <div className="feature-strip">
+            <div className="feature-strip-box">
 
-                        <Link to="/">Home</Link>
-                        <Link to="/register">Register</Link>
-                        <Link to="/login">Login</Link>
-                    </div>
-
-                    <div className="footer-contact">
-                        <h3>Connect with us</h3>
-
-                        <p>📧 support@fs0ciety.in</p>
-                        <p>📞 +91 98765 43210</p>
-
-                    </div>
-
+              <div className="feature-item">
+                <div className="feature-icon">
+                  ⚙
                 </div>
 
-                <div className="copyright">
-                    © {new Date().getFullYear()} Fsociety | Designed with ❤️ in ReactJS & ExpressJS.
-                </div>
-            </footer>
+                <div>
+                  <div className="feature-item-title">
+                    AI-Powered Analysis
+                  </div>
 
-        </>
-    );
-};
+                  <div className="feature-item-sub">
+                    Advanced OCR and vision AI
+                  </div>
+                </div>
+              </div>
+
+              <div className="feature-item">
+                <div className="feature-icon">
+                  ♢
+                </div>
+
+                <div>
+                  <div className="feature-item-title">
+                    Rule-based Compliance
+                  </div>
+
+                  <div className="feature-item-sub">
+                    Aligned with LM Rules, 2011
+                  </div>
+                </div>
+              </div>
+
+              <div className="feature-item">
+                <div className="feature-icon">
+                  ✓
+                </div>
+
+                <div>
+                  <div className="feature-item-title">
+                    Trusted Evidence
+                  </div>
+
+                  <div className="feature-item-sub">
+                    Audit-ready reports
+                  </div>
+                </div>
+              </div>
+
+              <div className="india-accent">
+                <div className="wave orange" />
+                <div className="wave white" />
+                <div className="wave green" />
+              </div>
+
+            </div>
+          </div>
+
+          <div className="footer-line">
+            <div className="footer-links">
+              Safer Products
+              <span>|</span>
+              Fairer Markets
+              <span>|</span>
+              Stronger Consumers
+            </div>
+          </div>
+
+      </footer>
+    </>
+  );
+}
 
 export default Footer;
