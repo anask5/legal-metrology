@@ -21,6 +21,10 @@ function App() {
         {
           path: "/register",
           element: <Register />,
+        },
+        {
+          path: "/dashboard",
+          element: <Dashboard />,
 
         }
       ],
