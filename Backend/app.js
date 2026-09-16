@@ -7,6 +7,8 @@ import jwt from "jsonwebtoken";
 import bcrypt from 'bcrypt';
 import cors from 'cors';
 import auth from '../Backend/middleware/auth.js'
+import upload from "../Backend/middleware/upload.js";
+import analyzeProduct from "../Backend/services/aiService.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -141,6 +143,57 @@ app.post("/api/logout", auth, async (req, res) => {
             message: err.message,
         });
     }
+});
+
+app.post('/api/scan', upload.single('image'), async (req, res) => {
+
+    try {
+        if (!req.file) {
+            return res.status(400).json({
+                success:false,
+                message: "Product image is required"
+            });
+        }
+
+        const AiResult = await analyzeProduct(req.file.path);
+        console.log('AI Result', AiResult);
+
+        res.status(200).json({
+            success: true,
+            message: "Product Scanned Successfully",
+            data: AiResult
+        });
+
+    }
+    catch(err){
+
+        console.error(err);
+
+        res.status(500).json({
+            success: false,
+            message: 'scan failed'
+        });
+
+    }
+       
+});
+
+
+
+app.get('/api/inspection/:id', (req, res) => {
+        // logic
+});
+app.get('/api/inspection/', (req, res) => {
+        // logic
+});
+app.post('/api/violation/:id/confirm', (req, res) => {
+        // logic
+});
+app.post('/api/inspection/:id/decline', (req, res) => {
+        // logic
+});
+app.post('/api/report/:inspectionId', (req, res) => {
+        // logic
 });
 
     app.listen(port, () => {
