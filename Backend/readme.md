@@ -125,10 +125,6 @@ MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
 ```
 
-Never commit `.env` to GitHub.
-
-Use `.env.example` for variables that other team members need.
-
 ---
 
 # ▶️ Running the Server
@@ -175,7 +171,7 @@ Legal Metrology API Running
 POST /api/register
 ```
 
-Creates a new user account.
+Creates a new user account only for Admin.
 
 ---
 
@@ -480,53 +476,6 @@ Result
 React Frontend
 ```
 
----
-
-# 🛠️ Development Priority
-
-For the internal hackathon prototype, development should happen in this order:
-
-### Phase 1
-
-* Express server
-* MongoDB connection
-* Authentication
-
-### Phase 2
-
-* Image upload
-* `POST /api/scan`
-
-### Phase 3
-
-* Mock AI
-* Structured product data
-
-### Phase 4
-
-* Compliance rule engine
-
-### Phase 5
-
-* Save inspection results
-
-### Phase 6
-
-* Inspection history
-
-### Phase 7
-
-* Confirm/dismiss violations
-
-### Phase 8
-
-* Frontend integration
-
-### Phase 9
-
-* Replace Mock AI with the real AI service
-
----
 
 # 🚧 Future Improvements
 
@@ -545,67 +494,3 @@ The following features can be integrated after the MVP:
 * Advanced report generation
 
 ---
-
-# 👥 Team Responsibilities
-
-### Backend
-
-**Backend Person 1**
-
-* Express server
-* Scan API
-* Image upload
-* AI-service integration
-* Backend integration
-
-**Backend Person 2**
-
-* MongoDB
-* Inspection models
-* Inspection APIs
-* Compliance rule engine
-* Violation management
-
-### AI
-
-* OpenCV
-* OCR
-* Information extraction
-* Layout understanding
-* Confidence scores
-
-### Frontend
-
-* React
-* Tailwind CSS
-* Scan interface
-* Compliance results
-* Evidence viewer
-* Inspection history
-* Reports UI
-
----
-
-# 🎯 MVP Goal
-
-The internal prototype should successfully demonstrate:
-
-```text
-UPLOAD PRODUCT
-      ↓
-SCAN
-      ↓
-EXTRACT INFORMATION
-      ↓
-CHECK COMPLIANCE
-      ↓
-SHOW POTENTIAL VIOLATIONS
-      ↓
-SAVE INSPECTION
-      ↓
-VIEW HISTORY
-      ↓
-INSPECTOR CONFIRMS / DISMISSES
-```
-
-The immediate goal is a working end-to-end prototype. Advanced AI and production infrastructure can be added after the core workflow is stable.
