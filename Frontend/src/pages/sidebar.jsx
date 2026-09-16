@@ -5,8 +5,8 @@ import imp from "../assets/images/emblem.png";
 
 function Sidebar() {
   const menuItems = [
-    {name:"Home",path:"/home",icon:"⌂"},
-    
+    {name:"Home",path:"/",icon:"⌂"},
+    { name: "Dashboard", path: "/dashboard", icon: "⌘" },
     { name: "New Scan", path: "/scan_prod", icon: "⌕" },
     { name: "Scan History", path: "/history", icon: "◷" },
     
