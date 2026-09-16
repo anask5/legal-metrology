@@ -639,9 +639,6 @@ function Home() {
 
       <div className="home-page">
 
-        {/* Navbar */}
-
-        <Navbar />
         {/* ================= HERO ================= */}
 
         <section id="home" className="hero">
@@ -772,8 +769,7 @@ function Home() {
 
           {/* Footer */}
 
-          
-          <Footer />
+  
         </section>
 
       </div>
