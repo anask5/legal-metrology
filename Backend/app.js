@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 import jwt from "jsonwebtoken";
 import bcrypt from 'bcrypt';
 import cors from 'cors';
-import auth from '../Backend/middleware/auth.js'
+import auth from './middleware/isAdmin.js'
 import upload from "../Backend/middleware/upload.js";
 import analyzeProduct from "../Backend/services/aiService.js";
 
@@ -32,16 +32,16 @@ startServer();
 
 async function startServer (){
     await db();
+
+
     app.get('/', (req, res) => {
       res.send("Legal Metrology API Running")
+
 })
 
 
 
 
-app.post('/test', (req, res) => {
-    res.end("Legal Metrology API is Running !")
-})
 app.post('/api/register', async (req, res) => {
     try {
     const newUser = req.body
@@ -148,6 +148,7 @@ app.post("/api/logout", auth, async (req, res) => {
 app.post('/api/scan', upload.single('image'), async (req, res) => {
 
     try {
+      
         if (!req.file) {
             return res.status(400).json({
                 success:false,
@@ -155,10 +156,12 @@ app.post('/api/scan', upload.single('image'), async (req, res) => {
             });
         }
 
+
         const AiResult = await analyzeProduct(req.file.path);
+
         console.log('AI Result', AiResult);
 
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             message: "Product Scanned Successfully",
             data: AiResult
@@ -169,7 +172,7 @@ app.post('/api/scan', upload.single('image'), async (req, res) => {
 
         console.error(err);
 
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             message: 'scan failed'
         });
