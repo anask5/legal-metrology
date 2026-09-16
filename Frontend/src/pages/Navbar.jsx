@@ -156,14 +156,10 @@ function Navbar() {
             <Link to="/" className="navbar-link">
               Home
             </Link>
-
-            <a href="#dashboard" className="navbar-link">
-              Dashboard
-            </a>
-
-
             
-
+            <Link to="/dashboard" className="navbar-login">
+                Dashboard
+                </Link>
             
                 <Link to="/login" className="navbar-login">
                 Sgin In
