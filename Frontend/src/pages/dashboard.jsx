@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 import home from "./home.jsx";
 import Sidebar from "./sidebar.jsx";
+import Scan from "./scan_prod.jsx";
 
 function Dashboard() {
   const stats = [
@@ -941,7 +941,7 @@ function Dashboard() {
 
         <main className="dashboard-content">
 
-         
+
 
           <header className="dashboard-header">
 
@@ -975,7 +975,7 @@ function Dashboard() {
               </div>
 
               <Link
-                to="/scan"
+                to="/scan_prod"
                 className="new-scan"
               >
                 <span>+</span>
@@ -986,7 +986,7 @@ function Dashboard() {
 
           </header>
 
-          
+
 
           <div className="dashboard-main">
 
@@ -1025,10 +1025,10 @@ function Dashboard() {
                         stat.className === "green"
                           ? "change-green"
                           : stat.className === "orange"
-                          ? "change-orange"
-                          : stat.className === "purple"
-                          ? "change-purple"
-                          : "change-green"
+                            ? "change-orange"
+                            : stat.className === "purple"
+                              ? "change-purple"
+                              : "change-green"
                       }
                     >
                       {stat.change}

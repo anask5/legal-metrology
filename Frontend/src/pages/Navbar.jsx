@@ -1,5 +1,6 @@
 import React from "react";
 import imp from "../assets/images/emblem.png";
+
 import { Link } from "react-router-dom";
 
 function Navbar() {
@@ -156,17 +157,17 @@ function Navbar() {
             <Link to="/" className="navbar-link">
               Home
             </Link>
-            
-            <Link to="/dashboard" className="navbar-login">
-                Dashboard
-                </Link>
-            
-                <Link to="/login" className="navbar-login">
-                Sgin In
-                </Link>
-                <Link to="/Sgin-up" className="navbar-login">
-                Sgin Up 
-                </Link>
+
+            <Link to="/dashboard" className="navbar-link">
+              Dashboard
+            </Link>
+
+            <Link to="/login" className="navbar-login">
+              Sign In
+            </Link>
+            <Link to="/register" className="navbar-login">
+              Sign Up
+            </Link>
           </nav>
 
         </div>
