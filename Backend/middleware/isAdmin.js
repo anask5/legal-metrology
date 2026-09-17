@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 function isAdmin(req, res, next) {
     try {
-        const data = jwt.verify(req.cookies.token, "topsecret");
+        const data = jwt.verify(req.cookies.token, process.env.JWT_SECRET);
 
         req.user = data;
         if(data.role !== "admin"){
